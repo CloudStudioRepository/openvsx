@@ -102,7 +102,7 @@ public class StorageUtilService implements IStorageService {
 
     @Override
     public boolean isEnabled() {
-        return googleStorage.isEnabled() || azureStorage.isEnabled();
+        return googleStorage.isEnabled() || azureStorage.isEnabled() || tencentStorage.isEnabled();
     }
 
     public String getActiveStorageType() {
