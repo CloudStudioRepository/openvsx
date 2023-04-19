@@ -32,6 +32,8 @@ public class FileResource {
     public static final String STORAGE_GOOGLE = "google-cloud";
     public static final String STORAGE_AZURE = "azure-blob";
 
+    public static final String STORAGE_TENCENT = "tencent-cloud";
+
     @Id
     @GeneratedValue
     long id;

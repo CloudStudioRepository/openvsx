@@ -25,10 +25,7 @@ import org.eclipse.openvsx.repositories.RepositoryService;
 import org.eclipse.openvsx.search.SearchUtilService;
 import org.eclipse.openvsx.security.OAuth2UserServices;
 import org.eclipse.openvsx.security.TokenService;
-import org.eclipse.openvsx.storage.AzureBlobStorageService;
-import org.eclipse.openvsx.storage.AzureDownloadCountService;
-import org.eclipse.openvsx.storage.GoogleCloudStorageService;
-import org.eclipse.openvsx.storage.StorageUtilService;
+import org.eclipse.openvsx.storage.*;
 import org.eclipse.openvsx.util.TargetPlatform;
 import org.eclipse.openvsx.util.VersionService;
 import org.jobrunr.scheduling.JobRequestScheduler;
@@ -68,7 +65,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureWebClient
 @MockBean({
     ClientRegistrationRepository.class, UpstreamRegistryService.class, GoogleCloudStorageService.class,
-    AzureBlobStorageService.class, VSCodeIdService.class, AzureDownloadCountService.class,
+    AzureBlobStorageService.class, TencentCloudStorageService.class, VSCodeIdService.class, AzureDownloadCountService.class,
     CacheService.class, PublishExtensionVersionHandler.class, SearchUtilService.class,
     EclipseService.class, SimpleMeterRegistry.class
 })

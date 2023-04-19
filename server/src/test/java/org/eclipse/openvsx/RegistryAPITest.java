@@ -28,10 +28,7 @@ import org.eclipse.openvsx.search.ISearchService;
 import org.eclipse.openvsx.search.SearchUtilService;
 import org.eclipse.openvsx.security.OAuth2UserServices;
 import org.eclipse.openvsx.security.TokenService;
-import org.eclipse.openvsx.storage.AzureBlobStorageService;
-import org.eclipse.openvsx.storage.AzureDownloadCountService;
-import org.eclipse.openvsx.storage.GoogleCloudStorageService;
-import org.eclipse.openvsx.storage.StorageUtilService;
+import org.eclipse.openvsx.storage.*;
 import org.eclipse.openvsx.util.TargetPlatform;
 import org.eclipse.openvsx.util.VersionService;
 import org.junit.jupiter.api.Test;
@@ -78,7 +75,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureWebClient
 @MockBean({
     ClientRegistrationRepository.class, UpstreamRegistryService.class, GoogleCloudStorageService.class,
-    AzureBlobStorageService.class, VSCodeIdService.class, AzureDownloadCountService.class, CacheService.class,
+    AzureBlobStorageService.class, TencentCloudStorageService.class, VSCodeIdService.class, AzureDownloadCountService.class, CacheService.class,
     EclipseService.class, PublishExtensionVersionService.class, SimpleMeterRegistry.class
 })
 public class RegistryAPITest {

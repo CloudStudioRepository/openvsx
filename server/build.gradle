@@ -33,7 +33,8 @@ def versions = [
     bucket4j: '0.4.0',
     ehcache: '3.10.0',
     tika: '2.6.0',
-    bouncycastle: '1.69'
+    bouncycastle: '1.69',
+    tencentcos:'5.6.97'
 ]
 ext['junit-jupiter.version'] = versions.junit
 sourceCompatibility = versions.java
@@ -88,6 +89,7 @@ dependencies {
     implementation "com.fasterxml.woodstox:woodstox-core:${versions.woodstox}"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${versions.jackson}"
     implementation "org.apache.tika:tika-core:${versions.tika}"
+    implementation "com.qcloud:cos_api:${versions.tencentcos}"
     implementation("org.spdx:spdx-tools:${versions.spdx}") {
         exclude group: 'net.sf.saxon'
         exclude group: 'org.antlr', module: 'antlr'

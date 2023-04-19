@@ -58,6 +58,9 @@ public class StorageUtilService implements IStorageService {
     AzureBlobStorageService azureStorage;
 
     @Autowired
+    TencentCloudStorageService tencentStorage;
+
+    @Autowired
     AzureDownloadCountService azureDownloadCountService;
 
     @Autowired
@@ -108,6 +111,8 @@ public class StorageUtilService implements IStorageService {
             storageTypes.add(STORAGE_GOOGLE);
         if (azureStorage.isEnabled())
             storageTypes.add(STORAGE_AZURE);
+        if (tencentStorage.isEnabled())
+            storageTypes.add(STORAGE_TENCENT);
         if (!Strings.isNullOrEmpty(primaryService)) {
             if (!storageTypes.contains(primaryService))
                 throw new RuntimeException("The selected primary storage service is not available.");
@@ -130,6 +135,8 @@ public class StorageUtilService implements IStorageService {
             case STORAGE_AZURE:
                 azureStorage.uploadFile(resource);
                 break;
+            case STORAGE_TENCENT:
+                tencentStorage.uploadFile(resource);
             default:
                 throw new RuntimeException("External storage is not available.");
         }
@@ -147,6 +154,8 @@ public class StorageUtilService implements IStorageService {
             case STORAGE_AZURE:
                 azureStorage.uploadFile(resource, file);
                 break;
+            case STORAGE_TENCENT:
+                tencentStorage.uploadFile(resource, file);
             default:
                 throw new RuntimeException("External storage is not available.");
         }
@@ -165,6 +174,8 @@ public class StorageUtilService implements IStorageService {
             case STORAGE_AZURE:
                 azureStorage.uploadNamespaceLogo(namespace);
                 break;
+            case STORAGE_TENCENT:
+                tencentStorage.uploadNamespaceLogo(namespace);
             default:
                 throw new RuntimeException("External storage is not available.");
         }
@@ -181,6 +192,9 @@ public class StorageUtilService implements IStorageService {
             case STORAGE_AZURE:
                 azureStorage.removeFile(resource);
                 break;
+            case STORAGE_TENCENT:
+                tencentStorage.removeFile(resource);
+                break;
         }
     }
 
@@ -193,6 +207,9 @@ public class StorageUtilService implements IStorageService {
             case STORAGE_AZURE:
                 azureStorage.removeNamespaceLogo(namespace);
                 break;
+            case STORAGE_TENCENT:
+                tencentStorage.removeNamespaceLogo(namespace);
+                break;
         }
     }
 
@@ -203,6 +220,8 @@ public class StorageUtilService implements IStorageService {
                 return googleStorage.getLocation(resource);
             case STORAGE_AZURE:
                 return azureStorage.getLocation(resource);
+            case STORAGE_TENCENT:
+                return tencentStorage.getLocation(resource);
             case STORAGE_DB:
                 return URI.create(getFileUrl(resource.getName(), resource.getExtension(), UrlUtil.getBaseUrl()));
             default:
@@ -217,6 +236,8 @@ public class StorageUtilService implements IStorageService {
                 return googleStorage.getNamespaceLogoLocation(namespace);
             case STORAGE_AZURE:
                 return azureStorage.getNamespaceLogoLocation(namespace);
+            case STORAGE_TENCENT:
+                return tencentStorage.getNamespaceLogoLocation(namespace);
             case STORAGE_DB:
                 return URI.create(UrlUtil.createApiUrl(UrlUtil.getBaseUrl(), "api", namespace.getName(), "logo", namespace.getLogoName()));
             default:
@@ -234,6 +255,8 @@ public class StorageUtilService implements IStorageService {
                 return googleStorage.downloadNamespaceLogo(namespace);
             case STORAGE_AZURE:
                 return azureStorage.downloadNamespaceLogo(namespace);
+            case STORAGE_TENCENT:
+                return tencentStorage.downloadNamespaceLogo(namespace);
             case STORAGE_DB:
                 var logoFile = createNamespaceLogoFile();
                 Files.write(logoFile.getPath(), namespace.getLogoBytes());
@@ -344,6 +367,9 @@ public class StorageUtilService implements IStorageService {
                 break;
             case STORAGE_AZURE:
                 azureStorage.copyFiles(pairs);
+                break;
+            case STORAGE_TENCENT:
+                tencentStorage.copyFiles(pairs);
                 break;
         }
     }

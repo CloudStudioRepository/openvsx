@@ -16,6 +16,7 @@ import org.eclipse.openvsx.repositories.RepositoryService;
 import org.eclipse.openvsx.storage.AzureBlobStorageService;
 import org.eclipse.openvsx.storage.GoogleCloudStorageService;
 import org.eclipse.openvsx.storage.IStorageService;
+import org.eclipse.openvsx.storage.TencentCloudStorageService;
 import org.eclipse.openvsx.util.TempFile;
 import org.jobrunr.jobs.lambdas.JobRequestHandler;
 import org.jobrunr.scheduling.JobRequestScheduler;
@@ -51,6 +52,9 @@ public class MigrationService {
 
     @Autowired
     GoogleCloudStorageService googleStorage;
+
+    @Autowired
+    TencentCloudStorageService tencentStorage;
 
     @Autowired
     JobRequestScheduler scheduler;
@@ -156,7 +160,8 @@ public class MigrationService {
     private IStorageService getStorage(FileResource resource) {
         var storages = Map.of(
                 FileResource.STORAGE_AZURE, azureStorage,
-                FileResource.STORAGE_GOOGLE, googleStorage
+                FileResource.STORAGE_GOOGLE, googleStorage,
+                FileResource.STORAGE_TENCENT, tencentStorage
         );
 
         return storages.get(resource.getStorageType());

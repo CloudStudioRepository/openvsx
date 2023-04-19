@@ -44,10 +44,7 @@ import org.eclipse.openvsx.search.ISearchService;
 import org.eclipse.openvsx.search.SearchUtilService;
 import org.eclipse.openvsx.security.OAuth2UserServices;
 import org.eclipse.openvsx.security.TokenService;
-import org.eclipse.openvsx.storage.AzureBlobStorageService;
-import org.eclipse.openvsx.storage.AzureDownloadCountService;
-import org.eclipse.openvsx.storage.GoogleCloudStorageService;
-import org.eclipse.openvsx.storage.StorageUtilService;
+import org.eclipse.openvsx.storage.*;
 import org.eclipse.openvsx.util.TargetPlatform;
 import org.eclipse.openvsx.util.VersionService;
 import org.junit.jupiter.api.Test;
@@ -71,7 +68,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 @AutoConfigureWebClient
 @MockBean({
     ClientRegistrationRepository.class, GoogleCloudStorageService.class, AzureBlobStorageService.class,
-    AzureDownloadCountService.class, CacheService.class, UpstreamVSCodeService.class,
+    TencentCloudStorageService.class, AzureDownloadCountService.class, CacheService.class, UpstreamVSCodeService.class,
     VSCodeIdService.class, EntityManager.class, EclipseService.class, ExtensionValidator.class,
     SimpleMeterRegistry.class
 })

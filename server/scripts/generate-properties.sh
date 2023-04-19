@@ -60,3 +60,21 @@ then
     echo "ovsx.logs.azure.sas-token=$AZURE_LOGS_SAS_TOKEN" >> $OVSX_APP_PROFILE
     echo "Using Azure Logs Storage: $AZURE_LOGS_SERVICE_ENDPOINT"
 fi
+
+# Set the Tencent Cloud Storage
+if [ -n "$QCLOUD_COS_SECRET_ID" ] && [ -n "$QCLOUD_COS_SECRET_KEY" ] && [ -n "$QCLOUD_COS_REGION" ] && [ -n "$QCLOUD_COS_BUCKET_NAME" ] && [ -n "$QCLOUD_COS_OPENVSX_DIR" ]
+then
+    echo "ovsx.storage.qcloud.cos.secret-id=$QCLOUD_COS_SECRET_ID" >> $OVSX_APP_PROFILE
+    echo "ovsx.storage.qcloud.cos.secret-key=$QCLOUD_COS_SECRET_KEY" >> $OVSX_APP_PROFILE
+    echo "ovsx.storage.qcloud.cos.region=$QCLOUD_COS_REGION" >> $OVSX_APP_PROFILE
+    echo "ovsx.storage.qcloud.cos.bucket-name=$QCLOUD_COS_BUCKET_NAME" >> $OVSX_APP_PROFILE
+    echo "ovsx.storage.qcloud.cos.openvsx-dir=$QCLOUD_COS_OPENVSX_DIR" >> $OVSX_APP_PROFILE
+    echo "Using Tencent Cloud Storage"
+fi
+
+# set storage primary-service, azure-blob or google-cloud or tencent-cos
+if [ -n "$PRIMARY_SREVICE" ]
+then
+    echo "ovsx.storage.primary-service=$PRIMARY_SREVICE" >> $OVSX_APP_PROFILE
+    echo "Storage primary-service: $PRIMARY_SREVICE"
+fi
