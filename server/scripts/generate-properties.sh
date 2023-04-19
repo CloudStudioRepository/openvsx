@@ -72,7 +72,7 @@ then
     echo "Using Tencent Cloud Storage"
 fi
 
-# set storage primary-service, azure-blob or google-cloud or tencent-cos
+# set storage primary-service, azure-blob or google-cloud or tencent-cloud
 if [ -n "$PRIMARY_SREVICE" ]
 then
     echo "ovsx.storage.primary-service=$PRIMARY_SREVICE" >> $OVSX_APP_PROFILE
