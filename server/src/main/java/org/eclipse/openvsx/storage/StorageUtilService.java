@@ -137,6 +137,7 @@ public class StorageUtilService implements IStorageService {
                 break;
             case STORAGE_TENCENT:
                 tencentStorage.uploadFile(resource);
+                break;
             default:
                 throw new RuntimeException("External storage is not available.");
         }
@@ -156,6 +157,7 @@ public class StorageUtilService implements IStorageService {
                 break;
             case STORAGE_TENCENT:
                 tencentStorage.uploadFile(resource, file);
+                break;
             default:
                 throw new RuntimeException("External storage is not available.");
         }
@@ -176,6 +178,7 @@ public class StorageUtilService implements IStorageService {
                 break;
             case STORAGE_TENCENT:
                 tencentStorage.uploadNamespaceLogo(namespace);
+                break;
             default:
                 throw new RuntimeException("External storage is not available.");
         }
