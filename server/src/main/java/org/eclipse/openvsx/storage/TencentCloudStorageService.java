@@ -40,8 +40,6 @@ public class TencentCloudStorageService implements IStorageService {
 
     private static final Logger logger = LoggerFactory.getLogger(TencentCloudStorageService.class);
 
-    private static final String BASE_URL = "https://";
-
     @Value("${ovsx.storage.qcloud.cos.secret-id:}")
     String secretId;
 
@@ -56,6 +54,18 @@ public class TencentCloudStorageService implements IStorageService {
 
     @Value("${ovsx.storage.qcloud.cos.openvsx-dir:}")
     String openvsxDir;
+
+    @Value("${ovsx.storage.qcloud.cos.endpoint}")
+    private String endpoint;
+
+    String getEndpoint() {
+        if (endpoint != null && endpoint.endsWith("/")) {
+            return endpoint;
+        }
+        endpoint = String.format("https://%s.cos.%s.myqcloud.com/", bucketName, region);
+        logger.info("Use default Tencent COS endpoint: {}", endpoint);
+        return endpoint;
+    }
 
     private COSClient cosClient;
 
@@ -118,7 +128,7 @@ public class TencentCloudStorageService implements IStorageService {
     public URI getLocation(FileResource resource) {
         var key = getKey(getCosName(resource));
         // 类似 https://yourcosname.cos.ap-guangzhou.myqcloud.com/
-        var url = BASE_URL + bucketName + ".cos." + region + ".myqcloud.com/" + key;
+        var url = getEndpoint() + key;
         logger.info("Get location, url: {}", url);
         return URI.create(url);
     }
@@ -141,7 +151,7 @@ public class TencentCloudStorageService implements IStorageService {
     public URI getNamespaceLogoLocation(Namespace namespace) {
         var key = getKey(getCosName(namespace));
         // 类似 https://yourcosname.cos.ap-guangzhou.myqcloud.com/
-        var url = BASE_URL + bucketName + ".cos." + region + ".myqcloud.com/" + key;
+        String url = getEndpoint() + key;
         logger.info("Get namespace logo location, url: {}", url);
         return URI.create(url);
     }
