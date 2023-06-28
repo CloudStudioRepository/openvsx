@@ -34,8 +34,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -1217,7 +1220,7 @@ public class RegistryAPI {
                     .location(URI.create(url))
                     .body(json);
         } catch (ErrorResultException exc) {
-            logger.error("pulish fail, err:{}", exc.getStackTrace().toString());
+            logger.error("pulish fail, err:{}, trace:{}", exc, Arrays.toString(exc.getStackTrace()));
             return exc.toResponseEntity(ExtensionJson.class);
         }
     }
