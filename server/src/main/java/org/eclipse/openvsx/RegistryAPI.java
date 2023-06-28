@@ -22,6 +22,8 @@ import org.eclipse.openvsx.json.*;
 import org.eclipse.openvsx.search.ISearchService;
 import org.eclipse.openvsx.util.*;
 import org.elasticsearch.common.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
@@ -41,6 +43,7 @@ import static org.eclipse.openvsx.util.TargetPlatform.*;
 
 @RestController
 public class RegistryAPI {
+    protected final Logger logger = LoggerFactory.getLogger(RegistryAPI.class);
     private final static int REVIEW_TITLE_SIZE = 255;
     private final static int REVIEW_COMMENT_SIZE = 2048;
     private final static String VERSION_PATH_PARAM_REGEX = "(?:" + SemanticVersion.VERSION_PATH_PARAM_REGEX + ")|latest|pre-release";
@@ -1214,6 +1217,7 @@ public class RegistryAPI {
                     .location(URI.create(url))
                     .body(json);
         } catch (ErrorResultException exc) {
+            logger.error("pulish fail, err:{}", exc.getStackTrace().toString());
             return exc.toResponseEntity(ExtensionJson.class);
         }
     }
