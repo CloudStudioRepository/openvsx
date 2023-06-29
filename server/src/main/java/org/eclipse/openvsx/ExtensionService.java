@@ -29,6 +29,8 @@ import org.eclipse.openvsx.search.SearchUtilService;
 import org.eclipse.openvsx.util.ErrorResultException;
 import org.eclipse.openvsx.util.TempFile;
 import org.eclipse.openvsx.util.TimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -54,6 +56,8 @@ public class ExtensionService {
     @Value("${ovsx.publishing.require-license:false}")
     boolean requireLicense;
 
+    protected final Logger logger = LoggerFactory.getLogger(ExtensionService.class);
+
     @Transactional
     public ExtensionVersion mirrorVersion(TempFile extensionFile, String signatureName, PersonalAccessToken token, String binaryName, String timestamp) {
         var download = doPublish(extensionFile, binaryName, token, TimeUtil.fromUTCString(timestamp), false);
@@ -64,6 +68,7 @@ public class ExtensionService {
     public ExtensionVersion publishVersion(InputStream content, PersonalAccessToken token) {
         var extensionFile = createExtensionFile(content);
         var download = doPublish(extensionFile, null, token, TimeUtil.getCurrentUTC(), true);
+        logger.info("start publish for, id:{}, version:{}, platform:{}", download.getExtension().getId(), download.getExtension().getVersion(), download.getExtension().getTargetPlatform());
         publishHandler.publishAsync(download, extensionFile, this);
         return download.getExtension();
     }

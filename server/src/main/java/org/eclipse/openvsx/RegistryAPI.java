@@ -1220,7 +1220,7 @@ public class RegistryAPI {
                     .location(URI.create(url))
                     .body(json);
         } catch (ErrorResultException exc) {
-            logger.error("publish fail, err:{}, trace:{}", exc);
+            logger.error("publish fail, err:{}", exc.getMessage());
             return exc.toResponseEntity(ExtensionJson.class);
         }
     }
