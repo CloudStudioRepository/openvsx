@@ -123,7 +123,6 @@ public class PublishExtensionVersionHandler {
             if(updateExistingPublicIds) {
                 updateExistingPublicIds(extension).forEach(service::updateExtensionPublicId);
             }
-
             entityManager.persist(extension);
         } else {
             var existingVersion = repositories.findVersion(extVersion.getVersion(), extVersion.getTargetPlatform(), extension);
@@ -199,6 +198,22 @@ public class PublishExtensionVersionHandler {
     @Retryable
     public void publishAsync(FileResource download, TempFile extensionFile, ExtensionService extensionService) {
         var extVersion = download.getExtension();
+        int t = 0;
+        while(true)  {
+            // check if extVersion has been added
+            if (repositories.findVersion(
+                    extVersion.getVersion(), extVersion.getTargetPlatform(), extVersion.getExtension()) != null
+                    || t >= 6){
+                logger.info("publishAsync condition break, retry:{} ", t);
+                break;
+            }
+            try {
+                Thread.sleep(500, 0);
+                t++;
+            } catch (InterruptedException e) {
+                logger.error("failed to sleep", e);
+            }
+        }
 
         // Delete file resources in case publishAsync is retried
         service.deleteFileResources(extVersion);

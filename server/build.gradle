@@ -129,7 +129,7 @@ jooq {
                 logging = org.jooq.meta.jaxb.Logging.WARN
                 jdbc {
                     driver = 'org.postgresql.Driver'
-                    url = 'jdbc:postgresql://localhost:5432/postgres'
+                    url = 'jdbc:c://localhost:5432/postgres'
                     user = 'gitpod'
                     password = 'gitpod'
                 }
